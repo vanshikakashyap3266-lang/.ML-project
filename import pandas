@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+
+# Data
+data = pd.DataFrame({
+    'Study_Hours': [1, 2, 3, 4],
+    'Sleep_Hours': [5, 6, 7, 8]
+})
+
+poly = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)
+interaction_data = poly.fit_transform(data)
+
+# Column names
+columns = poly.get_feature_names_out(data.columns)
+
+# Convert to DataFrame
+df_interaction = pd.DataFrame(interaction_data, columns=columns)
+print(df_interaction)
+
+# --------- GRAPH ---------
+plt.figure()
+plt.scatter(df_interaction["Study_Hours"], df_interaction["Study_Hours Sleep_Hours"])
+plt.xlabel("Study Hours")
+plt.ylabel("Interaction (Study × Sleep)")
+plt.title("Interaction Term Visual Graph")
+plt.show()
