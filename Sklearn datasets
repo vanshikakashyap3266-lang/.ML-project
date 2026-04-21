@@ -1,0 +1,32 @@
+# Import libraries
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+
+# Load dataset (Digits - similar to MNIST)
+digits = datasets.load_digits()
+
+# Features (images ko flatten karna)
+X = digits.data   # 8x8 image -> 64 features
+y = digits.target # labels (0–9)
+
+# Split data (training + testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Create SVM model
+model = svm.SVC(kernel='rbf')   # you can try 'linear' also
+
+# Train model
+model.fit(X_train, y_train)
+
+# Prediction
+y_pred = model.predict(X_test)
+
+# Accuracy check
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Test with one sample
+print("Predicted Digit:", model.predict([X_test[0]]))
+print("Actual Digit:", y_test[0])
